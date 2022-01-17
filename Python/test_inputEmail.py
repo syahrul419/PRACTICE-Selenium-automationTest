@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 
 '''
-get data from excel file in list[tuple(email address, expectation result)]
+get data from excel file in list[tuple(email address, expectation result),]
 '''
 data = dataReader.readDataForLogin()
 
@@ -31,9 +31,6 @@ def test_googleAccount(driver, emailAddress, expected):
     text = driver.find_element_by_id('headingText').text
     assert text == expected
 
-
-    # text = driver.find_element_by_class_name('LXRPh').text
-    # assert text != 'Masukkan email atau nomor telepon yang valid' or 'Tidak dapat menemukan Akun Google Anda'
 
     # try:
     #     WebDriverWait(driver,10).until(EC.text_to_be_present_in_element())
