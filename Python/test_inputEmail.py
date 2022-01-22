@@ -6,6 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 
+options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
 '''
 get data from excel file in list[tuple(email address, expectation result),]
 '''
@@ -13,15 +16,15 @@ data = dataReader.readDataForLogin()
 
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome()
-    driver.minimize_window()
+    driver = webdriver.Chrome(options=options)
+    # driver.minimize_window()
+    driver.get('http://gmail.com')
     driver.implicitly_wait(5)
     yield driver
+    driver.quit()
 
 @pytest.mark.parametrize('emailAddress, expected', data)
 def test_googleAccount(driver, emailAddress, expected):
-    driver.get('http://gmail.com')
-
     emailField = driver.find_element_by_id('identifierId')
     emailField.send_keys(emailAddress)
     nextButton = driver.find_element_by_id('identifierNext')
